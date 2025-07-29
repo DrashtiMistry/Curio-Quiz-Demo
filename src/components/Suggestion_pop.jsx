@@ -7,7 +7,7 @@ const getAvatar = (user, gender) => {
       <img
         src="https://icon-library.com/images/boy-icon-png/boy-icon-png-10.jpg"
         alt="Male Avatar"
-        style={{ width: 36, height: 36, borderRadius: "50%" }}
+        className="w-9 h-9 rounded-full"
       />
     );
   }
@@ -16,7 +16,7 @@ const getAvatar = (user, gender) => {
       <img
         src="https://tse4.mm.bing.net/th/id/OIP.a9137B32ljxbh-d58GkiuQHaHk?r=0&cb=thvnextc2&rs=1&pid=ImgDetMain&o=7&rm=3"
         alt="Female Avatar"
-        style={{ width: 36, height: 36, borderRadius: "50%" }}
+        className="w-9 h-9 rounded-full"
       />
     );
   }
@@ -25,7 +25,7 @@ const getAvatar = (user, gender) => {
     <img
       src="https://icon-library.com/images/boy-icon-png/boy-icon-png-10.jpg"
       alt="Male Avatar"
-      style={{ width: 36, height: 36, borderRadius: "50%" }}
+      className="w-9 h-9 rounded-full"
     />
   );
 };
@@ -73,7 +73,7 @@ const SuggestionPop = ({
 }) => {
   const [suggestion, setSuggestion] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [vibed, setVibed] = useState({}); // {idx: true/false}
+  const [vibed, setVibed] = useState({});
 
   // For demo, StudyBuddy123 is female, others are male
   const getGender = (user) => (user === "StudyBuddy123" ? "female" : "male");
@@ -89,7 +89,7 @@ const SuggestionPop = ({
           user: "You",
           date: new Date().toLocaleDateString(),
           likes: 0,
-          gender: "male", // or "female" if you want to support gender selection
+          gender: "male",
         },
         ...initialPropsSuggestions,
       ];
@@ -99,7 +99,6 @@ const SuggestionPop = ({
     }, 700);
   };
 
-  // Toggle vibe: if vibed, remove vibe; if not, add vibe
   const handleVibe = (idx) => {
     const isVibed = vibed[idx];
     const newSuggestions = initialPropsSuggestions.map((s, i) =>
@@ -111,69 +110,24 @@ const SuggestionPop = ({
 
   return (
     <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        background: "rgba(0,0,0,0.18)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 9999,
-      }}
+      className="fixed inset-0 bg-black/20 flex items-center justify-center z-[9999]"
       onClick={onClose}
     >
       <div
-        style={{
-          background: "#fff",
-          borderRadius: 18,
-          boxShadow: "0 8px 32px rgba(25,118,210,0.12)",
-          maxWidth: 440,
-          width: "100%",
-          padding: 0,
-          position: "relative",
-          display: "flex",
-          flexDirection: "column",
-        }}
+        className="bg-white rounded-2xl shadow-2xl max-w-md w-full flex flex-col relative"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div
-          style={{
-            padding: "22px 32px 0 32px",
-            borderTopLeftRadius: 18,
-            borderTopRightRadius: 18,
-          }}
-        >
+        <div className="pt-6 px-8 pb-0 rounded-t-2xl relative">
           <button
             onClick={onClose}
-            style={{
-              position: "absolute",
-              right: 18,
-              top: 18,
-              background: "none",
-              border: "none",
-              fontSize: 22,
-              color: "#888",
-              cursor: "pointer",
-            }}
+            className="absolute right-5 top-5 text-2xl text-gray-400 hover:text-gray-600"
             aria-label="Close"
           >
             ×
           </button>
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <span
-              style={{
-                color: "#1976d2",
-                fontWeight: 600,
-                fontSize: "1.18rem",
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-              }}
-            >
+          <div className="flex items-center gap-2">
+            <span className="text-[#1976d2] font-semibold text-lg flex items-center gap-1.5">
               <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
                 <path
                   d="M3 21v-2a4 4 0 0 1 4-4h7a4 4 0 0 1 4 4v2"
@@ -195,29 +149,14 @@ const SuggestionPop = ({
               Community Suggestions
             </span>
           </div>
-          <div style={{ color: "#5c6f8c", fontSize: "0.98em", marginTop: 2 }}>
+          <div className="text-gray-500 text-sm mt-1">
             Share your insights or learn from other students' suggestions
           </div>
         </div>
         {/* Suggestions List */}
-        <div
-          style={{
-            flex: 1,
-            overflowY: "auto",
-            padding: "8px 0 0 0",
-            margin: "0 0 0 0",
-            maxHeight: 320,
-          }}
-        >
+        <div className="flex-1 overflow-y-auto pt-2 pb-2 max-h-[320px]">
           {initialPropsSuggestions.length === 0 ? (
-            <div
-              style={{
-                color: "#888",
-                fontSize: "0.98em",
-                textAlign: "center",
-                marginTop: 32,
-              }}
-            >
+            <div className="text-gray-400 text-center mt-8 text-base">
               No suggestions yet. Be the first to help!
             </div>
           ) : (
@@ -226,98 +165,31 @@ const SuggestionPop = ({
               return (
                 <div
                   key={idx}
-                  style={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    gap: 12,
-                    background: "#f8fafc",
-                    borderRadius: 12,
-                    padding: "14px 16px",
-                    margin: "0 24px 14px 24px",
-                    boxShadow: "0 1px 6px rgba(25,118,210,0.06)",
-                    border: "1px solid #e3eafc",
-                    position: "relative",
-                  }}
+                  className="flex items-start gap-3 bg-[#f8fafc] rounded-xl px-4 py-3 mx-6 mb-3 shadow-sm border border-[#e3eafc] relative"
                 >
-                  <div
-                    style={{
-                      fontSize: 28,
-                      marginTop: 2,
-                      flexShrink: 0,
-                      width: 36,
-                      height: 36,
-                      borderRadius: "50%",
-                      background: "#e3eafc",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      overflow: "hidden",
-                    }}
-                  >
+                  <div className="w-9 h-9 rounded-full bg-[#e3eafc] flex items-center justify-center overflow-hidden flex-shrink-0">
                     {getAvatar(s.user, s.gender || getGender(s.user))}
                   </div>
-                  <div style={{ flex: 1 }}>
-                    <div
-                      style={{
-                        fontSize: "1.04em",
-                        color: "#222",
-                        marginBottom: 4,
-                      }}
-                    >
-                      {s.text}
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 8,
-                        marginTop: 4,
-                      }}
-                    >
-                      <span
-                        style={{
-                          background: "#e3eafc",
-                          color: "#1976d2",
-                          borderRadius: 6,
-                          padding: "2px 10px",
-                          fontSize: "0.95em",
-                          fontWeight: 500,
-                        }}
-                      >
+                  <div className="flex-1">
+                    <div className="text-base text-gray-900 mb-1">{s.text}</div>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="bg-[#e3eafc] text-[#1976d2] rounded-md px-2 py-0.5 text-xs font-medium">
                         {s.user}
                       </span>
-                      <span style={{ color: "#888", fontSize: "0.95em" }}>
-                        {s.date}
-                      </span>
+                      <span className="text-gray-400 text-xs">{s.date}</span>
                       <button
                         onClick={() => handleVibe(idx)}
-                        style={{
-                          marginLeft: "auto",
-                          background: isVibed ? "#fff1f0" : "#fff",
-                          border: isVibed
-                            ? "1.5px solid #ff4d4f"
-                            : "1px solid #e3eafc",
-                          color: isVibed ? "#ff4d4f" : "#222",
-                          fontSize: "1em",
-                          cursor: "pointer",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 6,
-                          borderRadius: 16,
-                          padding: "2px 14px 2px 10px",
-                          fontWeight: 600,
-                          boxShadow: isVibed
-                            ? "0 1px 8px rgba(255,77,79,0.08)"
-                            : "0 1px 4px rgba(25,118,210,0.04)",
-                          transition:
-                            "background 0.15s, border 0.15s, color 0.15s",
-                        }}
+                        className={`ml-auto flex items-center gap-1.5 rounded-xl px-3 py-1 font-semibold text-sm border transition
+                          ${
+                            isVibed
+                              ? "bg-[#fff1f0] border-[#ff4d4f] text-[#ff4d4f] shadow"
+                              : "bg-white border-[#e3eafc] text-gray-700 hover:bg-[#f0f7ff]"
+                          }
+                        `}
                         aria-label="Vibe"
                       >
-                        <span style={{ marginRight: 2 }}>
-                          <VibeIcon filled={isVibed} size={20} />
-                        </span>
-                        <span style={{ color: isVibed ? "#ff4d4f" : "#222" }}>
+                        <VibeIcon filled={isVibed} size={20} />
+                        <span>
                           {s.likes} {isVibed ? "vibed" : "vibe"}
                         </span>
                       </button>
@@ -331,80 +203,34 @@ const SuggestionPop = ({
         {/* Comment Input at Bottom */}
         <form
           onSubmit={handleSubmit}
-          style={{
-            borderTop: "1px solid #e3eafc",
-            background: "#f8fafc",
-            borderBottomLeftRadius: 18,
-            borderBottomRightRadius: 18,
-            padding: "18px 24px 16px 24px",
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-            boxShadow: "0 -2px 8px rgba(25,118,210,0.03)",
-          }}
+          className="border-t border-[#e3eafc] bg-[#f8fafc] rounded-b-2xl px-6 py-4 flex items-center gap-3 shadow-sm"
         >
-          <div
-            style={{
-              fontSize: 26,
-              width: 36,
-              height: 36,
-              borderRadius: "50%",
-              background: "#e3eafc",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexShrink: 0,
-              overflow: "hidden",
-            }}
-          >
+          <div className="w-9 h-9 rounded-full bg-[#e3eafc] flex items-center justify-center overflow-hidden flex-shrink-0">
             <img
               src="https://icon-library.com/images/boy-icon-png/boy-icon-png-10.jpg"
               alt="Your Avatar"
-              style={{ width: 36, height: 36, borderRadius: "50%" }}
+              className="w-9 h-9 rounded-full"
             />
           </div>
           <input
             value={suggestion}
             onChange={(e) => setSuggestion(e.target.value)}
             placeholder="Add a comment..."
-            style={{
-              flex: 1,
-              border: "1.5px solid #b6d0ff",
-              borderRadius: 18,
-              padding: "10px 16px",
-              fontSize: "1.05em",
-              outline: "none",
-              background: "#fff",
-              marginRight: 8,
-              boxSizing: "border-box",
-              transition: "border 0.2s",
-            }}
+            className="flex-1 border border-[#b6d0ff] rounded-xl px-4 py-2 text-base outline-none bg-white mr-2 transition"
             disabled={submitting}
             maxLength={250}
           />
           <button
             type="submit"
             disabled={submitting || !suggestion.trim()}
-            style={{
-              background: submitting ? "#b6d0ff" : "#1976d2",
-              color: "#fff",
-              border: "none",
-              borderRadius: 16,
-              padding: "8px 18px",
-              fontWeight: 600,
-              fontSize: "1em",
-              cursor:
-                submitting || !suggestion.trim() ? "not-allowed" : "pointer",
-              boxShadow: submitting
-                ? "none"
-                : "0 2px 8px rgba(25,118,210,0.08)",
-              transition: "background 0.2s",
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-            }}
+            className={`flex items-center gap-1.5 rounded-xl px-4 py-2 font-semibold text-base transition
+              ${
+                submitting || !suggestion.trim()
+                  ? "bg-[#b6d0ff] cursor-not-allowed"
+                  : "bg-[#1976d2] hover:bg-[#2563eb] cursor-pointer"
+              } text-white shadow`}
           >
-            <span style={{ fontSize: 18 }}>➤</span>
+            <span className="text-lg">➤</span>
           </button>
         </form>
       </div>

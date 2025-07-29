@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom"; // <-- Add useNavigate
+import { useLocation, useNavigate } from "react-router-dom";
 import quizData from "../Data/quizData";
 import HintPop from "./hint_pop";
 import SuggestionPop from "./Suggestion_pop";
+import { motion as Motion } from "framer-motion";
 
 const QuizForm = () => {
   const location = useLocation();
-  const navigate = useNavigate(); // <-- Add this line
+  const navigate = useNavigate();
   const {
     testType = "JEE",
     subject = "Physics",
@@ -25,7 +26,6 @@ const QuizForm = () => {
   const currentQuestion = questions[currentQuestionIndex];
 
   const handleNext = () => {
-    // Save answer if selected
     setAnswers((prev) => {
       const updated = [...prev];
       updated[currentQuestionIndex] = selectedOption;
@@ -36,7 +36,6 @@ const QuizForm = () => {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSelectedOption(null);
     } else {
-      // On submit, calculate stats and navigate to AnalysisPage
       let correctCount = 0;
       let incorrectCount = 0;
       questions.forEach((q, idx) => {
@@ -75,248 +74,110 @@ const QuizForm = () => {
   }
 
   return (
-    <div
-      className="quiz-container"
-      style={{ minHeight: "100vh", background: "#fff" }}
-    >
-      <div style={{ maxWidth: 900, margin: "0 auto", paddingTop: 40 }}>
+    <div className="min-h-screen bg-white flex flex-col items-center">
+      <div className="w-full max-w-3xl px-2 pt-10">
         {/* Header */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            position: "relative",
-          }}
-        >
-          <h1 style={{ margin: 0, fontWeight: 700, fontSize: "2rem" }}>
+        <div className="flex justify-center items-center relative">
+          <h1 className="m-0 font-bold text-2xl">
             {testType} - {subject}
           </h1>
-          <div
-            style={{
-              position: "absolute",
-              right: 0,
-              top: "50%",
-              transform: "translateY(-50%)",
-              fontWeight: "bold",
-              fontSize: "1rem",
-              background: "#fff",
-              borderRadius: 8,
-              padding: "4px 16px",
-              boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
-            }}
-          >
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 font-bold text-base bg-white rounded-lg px-4 py-1 shadow">
             Question: {currentQuestionIndex + 1} / {totalQuestions}
           </div>
         </div>
         {/* Progress Bar */}
-        <div style={{ margin: "24px 0 0 0", width: "100%" }}>
-          <div
-            style={{
-              height: 6,
-              background: "#e3eafc",
-              borderRadius: 3,
-              overflow: "hidden",
-              marginBottom: 24,
-            }}
-          >
+        <div className="mt-6 w-full">
+          <div className="h-1.5 bg-[#e3eafc] rounded overflow-hidden mb-6">
             <div
+              className="h-full bg-[#1976d2] transition-all"
               style={{
                 width: `${
                   ((currentQuestionIndex + 1) / totalQuestions) * 100
                 }%`,
-                height: "100%",
-                background: "#1976d2",
-                transition: "width 0.3s",
               }}
             ></div>
           </div>
         </div>
         {/* Quiz Card */}
-        <div
-          className="quiz-card"
-          style={{
-            background: "#fff",
-            borderRadius: 16,
-            boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
-            maxWidth: 700,
-            margin: "0 auto",
-            padding: "32px 32px 24px 32px",
-            marginTop: 0,
-          }}
+        <Motion.div
+          className="bg-white rounded-2xl shadow-lg max-w-2xl mx-auto p-8 mt-0"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-            <h2 style={{ margin: 0, fontWeight: 600, fontSize: "1.2rem" }}>
+          <div className="flex items-center gap-4">
+            <h2 className="m-0 font-semibold text-lg">
               Question {currentQuestionIndex + 1}
             </h2>
-            <span
-              style={{
-                fontSize: "0.98em",
-                color: "#1976d2",
-                background: "#e3eafc",
-                borderRadius: "999px",
-                padding: "4px 18px",
-                fontWeight: 600,
-                boxShadow: "0 1px 4px rgba(25, 118, 210, 0.08)",
-                border: "1px solid #b6d0ff",
-                marginLeft: "auto",
-                letterSpacing: "0.02em",
-                display: "inline-block",
-                minWidth: 120,
-                textAlign: "center",
-              }}
-            >
+            <span className="text-[#1976d2] bg-[#e3eafc] rounded-full px-4 py-1 font-semibold shadow border border-[#b6d0ff] ml-auto min-w-[120px] text-center text-sm">
               Asked in: {currentQuestion.year || "N/A"}
             </span>
             <button
-              className="hint-btn"
-              style={{
-                marginLeft: "auto",
-                marginRight: 8,
-                background: "#f5faff",
-                border: "1px solid #e3eafc",
-                borderRadius: 6,
-                padding: "4px 12px",
-                fontSize: "1em",
-                cursor: "pointer",
-              }}
+              className="ml-2 bg-[#f5faff] border border-[#e3eafc] rounded px-3 py-1 text-base cursor-pointer hover:bg-[#e3eafc] hover:border-[#1976d2] hover:text-[#1976d2] transition"
               onClick={() => setShowHint(true)}
             >
               💡 Hint
             </button>
             <button
-              className="suggestions-btn"
-              style={{
-                background: "#f5faff",
-                border: "1px solid #e3eafc",
-                borderRadius: 6,
-                padding: "4px 12px",
-                fontSize: "1em",
-                cursor: "pointer",
-              }}
-              onClick={() => setShowSuggestion(true)} // <-- Show suggestion pop
+              className="bg-[#f5faff] border border-[#e3eafc] rounded px-3 py-1 text-base cursor-pointer hover:bg-[#e3eafc] hover:border-[#1976d2] hover:text-[#1976d2] transition"
+              onClick={() => setShowSuggestion(true)}
             >
               💬 Suggestions
             </button>
           </div>
-          <p
-            className="question-text"
-            style={{ marginTop: 24, fontSize: "1.1rem" }}
-          >
-            {currentQuestion.text}
-          </p>
+          <p className="mt-6 text-base">{currentQuestion.text}</p>
           {currentQuestion.image && (
-            <div className="question-image-wrapper" style={{ marginTop: 16 }}>
+            <div className="mt-4 text-center">
               <img
                 src={currentQuestion.image}
                 alt="Question visual"
-                className="question-image"
-                style={{ maxWidth: "100%", borderRadius: 8 }}
+                className="max-w-full rounded"
               />
             </div>
           )}
-          <div className="options-list" style={{ marginTop: 32 }}>
+          <div className="mt-8">
             {currentQuestion.options.map((option, index) => (
               <div
                 key={index}
-                className={`option-item ${
-                  selectedOption === index ? "selected" : ""
+                className={`flex items-center mb-4 cursor-pointer rounded-lg border transition px-5 py-3 text-base ${
+                  selectedOption === index
+                    ? "bg-[#f0f7ff] border-2 border-[#1976d2] shadow"
+                    : "bg-white border border-[#e3eafc] hover:bg-[#e3eafc] hover:border-[#1976d2]"
                 }`}
                 onClick={() => setSelectedOption(index)}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginBottom: 18,
-                  cursor: "pointer",
-                  borderRadius: 8,
-                  border:
-                    selectedOption === index
-                      ? "2px solid #1976d2"
-                      : "1px solid #e3eafc",
-                  padding: "14px 18px",
-                  background: selectedOption === index ? "#f0f7ff" : "#fff",
-                  fontSize: "1.05em",
-                  transition: "border 0.2s, background 0.2s",
-                }}
               >
                 <input
                   type="radio"
                   name="option"
                   readOnly
                   checked={selectedOption === index}
-                  style={{ marginRight: 14 }}
+                  className="mr-4"
                 />
-                <label style={{ cursor: "pointer" }}>{option}</label>
+                <label className="cursor-pointer">{option}</label>
               </div>
             ))}
           </div>
-        </div>
+        </Motion.div>
         {/* Navigation Buttons */}
-        <div
-          className="quiz-navigation"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: 16,
-            marginTop: 32,
-            marginBottom: 32,
-          }}
-        >
-          {/* Previous Button (blue theme) */}
+        <div className="flex justify-center gap-4 mt-8 mb-8">
+          {/* Previous Button */}
           <button
             onClick={handlePrevious}
             disabled={currentQuestionIndex === 0}
-            style={{
-              padding: "10px 28px",
-              borderRadius: 8,
-              border: "1px solid #e3eafc",
-              background: "#fff",
-              fontWeight: 500,
-              fontSize: "1em",
-              cursor: currentQuestionIndex === 0 ? "not-allowed" : "pointer",
-              opacity: currentQuestionIndex === 0 ? 0.6 : 1,
-              transition: "background 0.2s, border 0.2s, color 0.2s",
-            }}
-            onMouseOver={(e) => {
-              if (currentQuestionIndex !== 0) {
-                e.currentTarget.style.background = "#f0f7ff";
-                e.currentTarget.style.border = "1.5px solid #1976d2";
-                e.currentTarget.style.color = "#1976d2";
-              }
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.background = "#fff";
-              e.currentTarget.style.border = "1px solid #e3eafc";
-              e.currentTarget.style.color = "#222";
-            }}
+            className={`px-7 py-3 rounded-lg border font-medium text-base transition
+              ${
+                currentQuestionIndex === 0
+                  ? "bg-white border-[#e3eafc] text-gray-400 cursor-not-allowed opacity-60"
+                  : "bg-white border-[#e3eafc] text-gray-900 hover:bg-[#f0f7ff] hover:border-[#1976d2] hover:text-[#1976d2] cursor-pointer"
+              }`}
           >
             &lt; Previous
           </button>
-
-          {/* Next/Submit Button (orange theme) */}
+          {/* Next/Submit Button */}
           <button
             onClick={handleNext}
-            style={{
-              padding: "10px 28px",
-              borderRadius: 8,
-              border: "1px solid #F97316",
-              background: "#fff",
-              fontWeight: 500,
-              fontSize: "1em",
-              color: "#F97316",
-              cursor: "pointer",
-              transition: "background 0.2s, border 0.2s, color 0.2s",
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.background = "#FDBA74";
-              e.currentTarget.style.border = "1.5px solid #F97316";
-              e.currentTarget.style.color = "#fff";
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.background = "#fff";
-              e.currentTarget.style.border = "1px solid #F97316";
-              e.currentTarget.style.color = "#F97316";
-            }}
+            className={`px-7 py-3 rounded-lg border font-medium text-base transition
+              border-[#F97316] text-[#F97316] bg-white hover:bg-[#FDBA74] hover:border-[#F97316] hover:text-white cursor-pointer`}
           >
             {currentQuestionIndex === totalQuestions - 1
               ? "Submit"
@@ -329,34 +190,15 @@ const QuizForm = () => {
       {/* HintPop Modal */}
       {showHint && (
         <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            background: "rgba(0,0,0,0.25)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 9999,
-          }}
+          className="fixed inset-0 bg-black/25 flex items-center justify-center z-[9999]"
           onClick={() => setShowHint(false)}
         >
           <div onClick={(e) => e.stopPropagation()}>
             <HintPop question={currentQuestion.text} />
-            <div style={{ textAlign: "center", marginTop: 16 }}>
+            <div className="text-center mt-4">
               <button
                 onClick={() => setShowHint(false)}
-                style={{
-                  padding: "8px 20px",
-                  borderRadius: 6,
-                  background: "#e3eafc",
-                  color: "#1976d2",
-                  border: "none",
-                  cursor: "pointer",
-                  fontWeight: 500,
-                }}
+                className="px-5 py-2 rounded bg-[#e3eafc] text-[#1976d2] border-none cursor-pointer font-medium"
               >
                 Close
               </button>

@@ -29,7 +29,6 @@ const HintPop = ({ question }) => {
           }
         );
         const data = await response.json();
-        console.log("Gemini API response:", data);
         let aiHint = "";
         if (
           data &&
@@ -56,6 +55,7 @@ const HintPop = ({ question }) => {
         }
         setHint(aiHint);
       } catch (error) {
+        console.error("Error generating hint:", error);
         setHint("Error generating hint. Please try again.");
       }
       setLoading(false);
@@ -67,35 +67,17 @@ const HintPop = ({ question }) => {
   }, [question]);
 
   return (
-    <div
-      style={{
-        maxWidth: 400,
-        margin: "0 auto",
-        padding: 24,
-        background: "#fff",
-        borderRadius: 12,
-        boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
-      }}
-    >
-      <h3 style={{ marginBottom: 12 }}>AI Hint</h3>
-      <p style={{ color: "#888", marginBottom: 16 }}>
+    <div className="max-w-sm mx-auto p-6 bg-white rounded-2xl shadow-2xl">
+      <h3 className="text-xl font-bold mb-3 text-[#1976d2]">AI Hint</h3>
+      <p className="text-gray-500 mb-4">
         Get a helpful hint for this question.
       </p>
       {loading ? (
-        <div style={{ textAlign: "center", padding: 24 }}>
+        <div className="text-center py-8 text-gray-400 text-base">
           Generating hint...
         </div>
       ) : (
-        <div
-          style={{
-            background: "#fffbe6",
-            padding: 16,
-            borderRadius: 8,
-            color: "#8a6d3b",
-            minHeight: 40,
-            textAlign: "center",
-          }}
-        >
+        <div className="bg-yellow-50 px-4 py-3 rounded-lg text-yellow-700 min-h-[40px] text-center font-medium">
           {hint}
         </div>
       )}

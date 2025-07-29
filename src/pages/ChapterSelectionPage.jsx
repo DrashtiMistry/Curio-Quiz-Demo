@@ -1,7 +1,6 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-
 const CHAPTERS_DATA = {
   Physics: [
     {
@@ -10,7 +9,7 @@ const CHAPTERS_DATA = {
       desc: "Practice questions from mechanics",
       questions: 50,
       difficulty: "Medium",
-      difficultyColor: "#f57c00",
+      difficultyColor: "bg-orange-500",
     },
     {
       key: "thermo",
@@ -18,7 +17,7 @@ const CHAPTERS_DATA = {
       desc: "Practice questions from thermodynamics",
       questions: 30,
       difficulty: "Hard",
-      difficultyColor: "#d32f2f",
+      difficultyColor: "bg-red-600",
     },
     {
       key: "em",
@@ -26,7 +25,7 @@ const CHAPTERS_DATA = {
       desc: "Practice questions from electromagnetism",
       questions: 45,
       difficulty: "Hard",
-      difficultyColor: "#d32f2f",
+      difficultyColor: "bg-red-600",
     },
     {
       key: "optics",
@@ -34,7 +33,7 @@ const CHAPTERS_DATA = {
       desc: "Practice questions from optics",
       questions: 25,
       difficulty: "Medium",
-      difficultyColor: "#f57c00",
+      difficultyColor: "bg-orange-500",
     },
     {
       key: "modern",
@@ -42,7 +41,7 @@ const CHAPTERS_DATA = {
       desc: "Practice questions from modern physics",
       questions: 35,
       difficulty: "Hard",
-      difficultyColor: "#d32f2f",
+      difficultyColor: "bg-red-600",
     },
   ],
   // Add other subjects here...
@@ -59,48 +58,51 @@ const ChapterSelectionPage = () => {
   const chapters = CHAPTERS_DATA[subject] || [];
 
   const handleStartQuiz = (chapterKey) => {
-    // Find the chapter object by key
     const chapterObj = chapters.find((c) => c.key === chapterKey);
-    // Use the title property (capitalized) for quizData lookup
     navigate("/quiz", {
       state: { testType, subject, chapter: chapterObj.title },
     });
   };
 
   return (
-    <div className="chapter-selection-page">
-      <div className="back-link" onClick={() => navigate(-1)}>
-        <span className="back-arrow">←</span> Back to Subjects
+    <div className="min-h-screen bg-[#f7f9fc] py-12 px-2">
+      <div
+        className="mb-6 text-blue-700 font-semibold cursor-pointer flex items-center w-fit hover:underline"
+        onClick={() => navigate(-1)}
+      >
+        <span className="mr-1 text-xl">←</span> Back to Subjects
       </div>
-      <h1 className="chapter-selection-title">
+      <h1 className="text-2xl md:text-3xl font-extrabold text-center text-[#1976d2] mb-2">
         {testType} - {subject}
       </h1>
-      <p className="chapter-selection-subtitle">
+      <p className="text-lg text-gray-600 text-center mb-10">
         Select a chapter to start your quiz
       </p>
-      <div className="chapter-cards-grid">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
         {chapters.map((chapter) => (
-          <div className="chapter-card" key={chapter.key}>
-            <div className="chapter-card-header">
-              <h2 className="chapter-title">{chapter.title}</h2>
+          <div
+            className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all cursor-pointer p-7 flex flex-col gap-3 border border-transparent hover:border-blue-200"
+            key={chapter.key}
+          >
+            <div className="flex items-center justify-between mb-2">
+              <h2 className="font-bold text-lg text-gray-900">
+                {chapter.title}
+              </h2>
               <div
-                className="chapter-difficulty"
-                style={{ backgroundColor: chapter.difficultyColor }}
+                className={`px-3 py-1 rounded-lg text-xs font-bold text-white ${chapter.difficultyColor}`}
               >
                 {chapter.difficulty}
               </div>
             </div>
-            <p className="chapter-desc">{chapter.desc}</p>
-            <div className="chapter-meta">
-              <span>
-                <span role="img" aria-label="questions">
-                  📚
-                </span>{" "}
-                {chapter.questions} questions available
+            <p className="text-gray-600 text-sm">{chapter.desc}</p>
+            <div className="flex items-center gap-2 mt-2 text-gray-500 text-xs font-medium">
+              <span role="img" aria-label="questions">
+                📚
               </span>
+              {chapter.questions} questions available
             </div>
             <button
-              className="app-btn chapter-btn"
+              className="bg-[#2563eb] hover:bg-[#1976d2] text-white font-semibold rounded-lg px-6 py-2 mt-4 transition-all"
               onClick={() => handleStartQuiz(chapter.key)}
             >
               ▷ Start Quiz

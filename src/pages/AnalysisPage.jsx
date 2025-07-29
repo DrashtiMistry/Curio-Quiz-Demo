@@ -8,319 +8,133 @@ const AnalysisPage = () => {
   const correctCount = location.state?.correctCount || 0;
   const incorrectCount = location.state?.incorrectCount || 0;
   const totalQuestions = location.state?.totalQuestions || answers.length || 5;
-  const testType = location.state?.testType || "General";
   const notAttempted = totalQuestions - (correctCount + incorrectCount);
+  const avgTime = location.state?.avgTime || 0; // in seconds
 
-  // Calculations
   const accuracyRate = totalQuestions
     ? ((correctCount / totalQuestions) * 100).toFixed(1)
     : 0;
   const completionRate = totalQuestions
     ? (((correctCount + incorrectCount) / totalQuestions) * 100).toFixed(1)
     : 0;
-  const avgTime = location.state?.avgTime || 0; // in seconds
 
-  // Gauge chart (simple SVG)
-  const solved = correctCount + incorrectCount;
-  const solvedPercent = totalQuestions ? solved / totalQuestions : 0;
+  // Gauge SVG math
   const correctPercent = totalQuestions ? correctCount / totalQuestions : 0;
   const incorrectPercent = totalQuestions ? incorrectCount / totalQuestions : 0;
-
   const gaugeAngle = (percent) => percent * 180;
 
   return (
-    <div style={{ minHeight: "100vh", background: "#fff", padding: 0 }}>
-      <div style={{ maxWidth: 900, margin: "0 auto", paddingTop: 40 }}>
-        {/* Gauge Card */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            margin: "40px 0 0 0",
-          }}
-        >
-          <div
-            style={{
-              background: "#fff",
-              borderRadius: 24,
-              boxShadow: "0 4px 32px rgba(25,118,210,0.08)",
-              padding: "32px 40px",
-              minWidth: 420,
-              display: "flex",
-              alignItems: "center",
-              gap: 32,
-            }}
-          >
-            {/* Gauge SVG */}
-            <div style={{ width: 180, height: 110, position: "relative" }}>
-              <svg width="180" height="110" viewBox="0 0 180 110">
-                {/* Background arc */}
-                <path
-                  d="M20,100 A80,80 0 0,1 160,100"
-                  fill="none"
-                  stroke="#e5e7eb"
-                  strokeWidth="16"
-                />
-                {/* Correct arc */}
-                <path
-                  d="M20,100 A80,80 0 0,1 160,100"
-                  fill="none"
-                  stroke="#22c55e"
-                  strokeWidth="16"
-                  strokeDasharray={`${gaugeAngle(correctPercent)} 999`}
-                  strokeDashoffset="0"
-                  style={{ transition: "stroke-dasharray 0.6s" }}
-                />
-                {/* Incorrect arc */}
-                <path
-                  d="M20,100 A80,80 0 0,1 160,100"
-                  fill="none"
-                  stroke="#ef4444"
-                  strokeWidth="16"
-                  strokeDasharray={`${gaugeAngle(incorrectPercent)} 999`}
-                  strokeDashoffset={gaugeAngle(correctPercent)}
-                  style={{ transition: "stroke-dasharray 0.6s" }}
-                />
-              </svg>
-              <div
-                style={{
-                  position: "absolute",
-                  top: 48,
-                  left: 0,
-                  width: "100%",
-                  textAlign: "center",
-                  fontWeight: 700,
-                  fontSize: 32,
-                  color: "#222",
-                }}
-              >
-                {solved}/{totalQuestions}
-              </div>
-              <div
-                style={{
-                  position: "absolute",
-                  top: 84,
-                  left: 0,
-                  width: "100%",
-                  textAlign: "center",
-                  fontWeight: 600,
-                  fontSize: 18,
-                  color: "#22c55e",
-                  letterSpacing: 0.5,
-                }}
-              >
-                Solved
-              </div>
-              <div
-                style={{
-                  position: "absolute",
-                  top: 104,
-                  left: 0,
-                  width: "100%",
-                  textAlign: "center",
-                  fontWeight: 400,
-                  fontSize: 14,
-                  color: "#888",
-                }}
-              >
-                {notAttempted} Attempting
-              </div>
+    <div className="min-h-screen bg-white flex flex-col items-center justify-start py-14">
+      <div className="w-full max-w-3xl px-2">
+        {/* Gauge and Statistics Grid */}
+        <div className="bg-white rounded-3xl shadow-lg flex flex-col md:flex-row items-center justify-between px-12 py-10 mb-10 gap-8">
+          {/* Gauge */}
+          <div className="relative w-[180px] h-[110px] flex-shrink-0">
+            <svg width="180" height="110" viewBox="0 0 180 110">
+              {/* Track */}
+              <path
+                d="M20,100 A80,80 0 0,1 160,100"
+                fill="none"
+                stroke="#F3F4F6"
+                strokeWidth="16"
+              />
+              {/* Correct */}
+              <path
+                d="M20,100 A80,80 0 0,1 160,100"
+                fill="none"
+                stroke="#22C55E"
+                strokeWidth="16"
+                strokeDasharray={`${gaugeAngle(correctPercent)} 999`}
+                strokeDashoffset="0"
+                className="transition-all duration-700"
+              />
+              {/* Incorrect */}
+              <path
+                d="M20,100 A80,80 0 0,1 160,100"
+                fill="none"
+                stroke="#EF4444"
+                strokeWidth="16"
+                strokeDasharray={`${gaugeAngle(incorrectPercent)} 999`}
+                strokeDashoffset={gaugeAngle(correctPercent)}
+                className="transition-all duration-700"
+              />
+            </svg>
+            <div className="absolute top-12 w-full text-center font-extrabold text-3xl text-gray-900">
+              {correctCount + incorrectCount}/{totalQuestions}
             </div>
-            {/* Stats */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 16,
-                  marginBottom: 8,
-                }}
-              >
-                <div
-                  style={{
-                    background: "#f6fef9",
-                    border: "1.5px solid #22c55e",
-                    color: "#22c55e",
-                    borderRadius: 12,
-                    padding: "10px 28px",
-                    fontWeight: 600,
-                    fontSize: 18,
-                    minWidth: 120,
-                    textAlign: "center",
-                  }}
-                >
-                  Correct <span style={{ marginLeft: 8 }}>{correctCount}</span>
-                </div>
+            <div className="absolute top-[84px] w-full text-center font-semibold text-lg text-green-500 tracking-wider">
+              Solved
+            </div>
+            <div className="absolute top-[108px] w-full text-center text-gray-400 text-sm">
+              {notAttempted} Attempting
+            </div>
+          </div>
+          {/* Stat Blocks */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full md:w-auto">
+            <div className="rounded-xl border-2 border-green-400 bg-green-50 py-4 text-center transition-all duration-200 hover:shadow-lg hover:bg-green-100">
+              <div className="text-green-600 font-semibold text-lg">
+                Correct
               </div>
-              <div
-                style={{
-                  background: "#fff6f6",
-                  border: "1.5px solid #ef4444",
-                  color: "#ef4444",
-                  borderRadius: 12,
-                  padding: "10px 28px",
-                  fontWeight: 600,
-                  fontSize: 18,
-                  minWidth: 120,
-                  textAlign: "center",
-                  marginBottom: 8,
-                }}
-              >
-                Incorrect{" "}
-                <span style={{ marginLeft: 8 }}>{incorrectCount}</span>
+              <div className="text-2xl font-bold mt-2">{correctCount}</div>
+            </div>
+            <div className="rounded-xl border-2 border-red-400 bg-red-50 py-4 text-center transition-all duration-200 hover:shadow-lg hover:bg-red-100">
+              <div className="text-red-500 font-semibold text-lg">
+                Incorrect
               </div>
-              <div
-                style={{
-                  background: "#f3f4f6",
-                  border: "1.5px solid #e5e7eb",
-                  color: "#222",
-                  borderRadius: 12,
-                  padding: "10px 28px",
-                  fontWeight: 600,
-                  fontSize: 18,
-                  minWidth: 120,
-                  textAlign: "center",
-                }}
-              >
+              <div className="text-2xl font-bold mt-2">{incorrectCount}</div>
+            </div>
+            <div className="rounded-xl border-2 border-gray-200 bg-gray-50 py-4 text-center transition-all duration-200 hover:shadow-lg hover:bg-gray-100">
+              <div className="text-gray-700 font-semibold text-lg">
                 Not Attempted
-                <span style={{ marginLeft: 8 }}>{notAttempted}</span>
               </div>
+              <div className="text-2xl font-bold mt-2">{notAttempted}</div>
             </div>
           </div>
         </div>
+
         {/* Performance Analysis */}
-        <div
-          style={{
-            margin: "40px auto 0 auto",
-            maxWidth: 600,
-            background: "#fff",
-            borderRadius: 16,
-            boxShadow: "0 2px 12px rgba(25,118,210,0.06)",
-            padding: "32px 32px 24px 32px",
-          }}
-        >
-          <div
-            style={{
-              fontWeight: 700,
-              fontSize: 22,
-              marginBottom: 18,
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-            }}
-          >
+        <div className="bg-white rounded-2xl shadow-md px-10 py-8 flex flex-col gap-7">
+          <div className="flex items-center gap-2 font-bold text-xl text-gray-800 mb-1">
             <span role="img" aria-label="target">
               🎯
             </span>
             Performance Analysis
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <span style={{ flex: 1 }}>Accuracy Rate</span>
-              <span
-                style={{
-                  color: "#ef4444",
-                  fontWeight: 700,
-                  fontSize: 18,
-                  background: "#fff6f6",
-                  borderRadius: 8,
-                  padding: "2px 16px",
-                  minWidth: 70,
-                  textAlign: "right",
-                }}
-              >
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-between group">
+              <span className="text-gray-600 font-medium">Accuracy Rate</span>
+              <span className="rounded-lg bg-red-50 text-red-500 px-4 py-1 font-bold text-lg transition-all group-hover:bg-red-100">
                 {accuracyRate}%
               </span>
             </div>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <span style={{ flex: 1 }}>Completion Rate</span>
-              <span
-                style={{
-                  color: "#1976d2",
-                  fontWeight: 700,
-                  fontSize: 18,
-                  background: "#e3eafc",
-                  borderRadius: 8,
-                  padding: "2px 16px",
-                  minWidth: 70,
-                  textAlign: "right",
-                }}
-              >
+            <div className="flex items-center justify-between group">
+              <span className="text-gray-600 font-medium">Completion Rate</span>
+              <span className="rounded-lg bg-blue-50 text-blue-600 px-4 py-1 font-bold text-lg transition-all group-hover:bg-blue-100">
                 {completionRate}%
               </span>
             </div>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <span style={{ flex: 1 }}>Average Time per Question</span>
-              <span
-                style={{
-                  color: "#222",
-                  fontWeight: 700,
-                  fontSize: 18,
-                  background: "#f3f4f6",
-                  borderRadius: 8,
-                  padding: "2px 16px",
-                  minWidth: 70,
-                  textAlign: "right",
-                }}
-              >
+            <div className="flex items-center justify-between group">
+              <span className="text-gray-600 font-medium">
+                Average Time per Question
+              </span>
+              <span className="rounded-lg bg-gray-50 text-gray-700 px-4 py-1 font-bold text-lg transition-all group-hover:bg-gray-100">
                 {avgTime ? `${(avgTime / 60).toFixed(1)}m` : "0.0m"}
               </span>
             </div>
           </div>
         </div>
+
         {/* Action Buttons */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: 18,
-            marginTop: 36,
-          }}
-        >
+        <div className="flex justify-center gap-6 mt-10">
           <button
-            style={{
-              background: "#fff",
-              border: "1.5px solid #1976d2",
-              color: "#1976d2",
-              borderRadius: 8,
-              padding: "10px 28px",
-              fontWeight: 600,
-              fontSize: "1em",
-              cursor: "pointer",
-              transition: "background 0.2s, border 0.2s, color 0.2s",
-            }}
+            className="bg-white border-2 border-blue-700 text-blue-700 font-semibold rounded-lg px-7 py-3 transition-all duration-150 hover:bg-blue-50 hover:scale-105 shadow-sm"
             onClick={() => navigate("/review", { state: location.state })}
-            onMouseOver={(e) => {
-              e.currentTarget.style.background = "#e3eafc";
-              e.currentTarget.style.color = "#1976d2";
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.background = "#fff";
-              e.currentTarget.style.color = "#1976d2";
-            }}
           >
             ⟳ Review Answers
           </button>
           <button
-            style={{
-              background: "#1976d2",
-              border: "none",
-              color: "#fff",
-              borderRadius: 8,
-              padding: "10px 28px",
-              fontWeight: 600,
-              fontSize: "1em",
-              cursor: "pointer",
-              transition: "background 0.2s",
-            }}
+            className="bg-blue-700 text-white font-semibold rounded-lg px-7 py-3 transition-all duration-150 hover:bg-blue-900 hover:scale-105 shadow-sm"
             onClick={() => navigate("/")}
-            onMouseOver={(e) => {
-              e.currentTarget.style.background = "#1453a3";
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.background = "#1976d2";
-            }}
           >
             🏠 Back to Home
           </button>
