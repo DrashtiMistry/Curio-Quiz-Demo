@@ -1,7 +1,5 @@
 @import "tailwindcss";
-<<<<<<< HEAD
-=======
-
+ 
 /* Custom container styles */
 .container {
   width: 100%;
@@ -40,4 +38,3 @@
     max-width: 1536px;
   }
 }
->>>>>>> 59652221922af32677c78ece6bf8c9f7994bb896
