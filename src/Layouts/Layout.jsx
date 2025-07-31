@@ -1,42 +1,42 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import logo from '../icons/logo.svg';
 
 const Layout = ({ children }) => {
   const [dark, setDark] = useState(false);
 
   return (
     <div
-      className={`${
-        dark ? "bg-[#101624] text-gray-100" : "bg-[#f7f9fc] text-gray-900"
-      } min-h-screen w-full flex flex-col`}
+      className={`${dark ? "bg-[#101624] text-gray-100" : "bg-[#f7f9fc] text-gray-900"
+        } min-h-screen w-full flex flex-col`}
     >
       {/* Navbar */}
       <nav
-        className={`flex items-center justify-between px-8 py-3 shadow-sm ${
-          dark
+        className={`flex items-center justify-between py-3 shadow-sm ${dark
             ? "bg-[#181f2e] border-b border-[#232b3d]"
             : "bg-white border-b border-[#e0e0e0]"
-        }`}
+          }`}
       >
-        <div>
-          <Link to="/">
+        <div className="h-12 flex items-center">
+          <Link to="/" className="block h-full">
             <img
               src="https://www.curioteach.com/CURIOTRANSPARENT1.svg"
               alt="Curio Logo"
-              className="h-12 w-auto"
+              className="h-full object-contain scale-[2.6]" // <- this scales the image inside same container
             />
           </Link>
         </div>
+
         <div className="flex items-center gap-6">
           <Link
             to="/profile"
-            className={`flex items-center gap-2 font-medium text-base hover:underline ${
-              dark ? "text-gray-100" : "text-gray-900"
-            }`}
+            className={`flex items-center gap-2 font-medium text-base hover:underline ${dark ? "text-gray-100" : "text-gray-900"
+              }`}
           >
             <span role="img" aria-label="profile">
               👤
             </span>{" "}
+
             Profile
           </Link>
           <button
