@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React from "react";
+=======
+import React, { useEffect, useState } from "react";
+>>>>>>> 59652221922af32677c78ece6bf8c9f7994bb896
 import { useLocation, useNavigate } from "react-router-dom";
 
 const AnalysisPage = () => {
@@ -19,10 +23,42 @@ const AnalysisPage = () => {
     : 0;
 
   // Gauge SVG math
+<<<<<<< HEAD
   const correctPercent = totalQuestions ? correctCount / totalQuestions : 0;
   const incorrectPercent = totalQuestions ? incorrectCount / totalQuestions : 0;
   const gaugeAngle = (percent) => percent * 180;
 
+=======
+  const [animatedPercent, setAnimatedPercent] = useState(0);
+  const correctPercent = totalQuestions ? correctCount / totalQuestions : 0;
+  const gaugeAngle = (percent) => percent * 180;
+
+  // Animate the gauge fill
+  useEffect(() => {
+    let start = 0;
+    const duration = 900; // ms
+    const step = 16; // ms per frame
+    const target = correctPercent;
+    if (target === 0) {
+      setAnimatedPercent(0);
+      return;
+    }
+    const increment = target / (duration / step);
+    let raf;
+    function animate() {
+      start += increment;
+      if (start >= target) {
+        setAnimatedPercent(target);
+      } else {
+        setAnimatedPercent(start);
+        raf = setTimeout(animate, step);
+      }
+    }
+    animate();
+    return () => clearTimeout(raf);
+  }, [correctPercent]);
+
+>>>>>>> 59652221922af32677c78ece6bf8c9f7994bb896
   return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-start py-14">
       <div className="w-full max-w-3xl px-2">
@@ -38,12 +74,17 @@ const AnalysisPage = () => {
                 stroke="#F3F4F6"
                 strokeWidth="16"
               />
+<<<<<<< HEAD
               {/* Correct */}
+=======
+              {/* Animated Correct */}
+>>>>>>> 59652221922af32677c78ece6bf8c9f7994bb896
               <path
                 d="M20,100 A80,80 0 0,1 160,100"
                 fill="none"
                 stroke="#22C55E"
                 strokeWidth="16"
+<<<<<<< HEAD
                 strokeDasharray={`${gaugeAngle(correctPercent)} 999`}
                 strokeDashoffset="0"
                 className="transition-all duration-700"
@@ -67,6 +108,24 @@ const AnalysisPage = () => {
             </div>
             <div className="absolute top-[108px] w-full text-center text-gray-400 text-sm">
               {notAttempted} Attempting
+=======
+                strokeDasharray={`${gaugeAngle(animatedPercent)} 999`}
+                strokeDashoffset="0"
+                style={{
+                  transition: "stroke-dasharray 0.7s cubic-bezier(.4,2,.6,1)",
+                  filter: "drop-shadow(0 2px 8px #22C55E44)",
+                }}
+              />
+            </svg>
+            <div className="absolute top-12 w-full text-center font-extrabold text-3xl text-gray-900">
+              {correctCount}/{totalQuestions}
+            </div>
+            <div className="absolute top-[84px] w-full text-center font-semibold text-lg text-green-500 tracking-wider">
+              Correct
+            </div>
+            <div className="absolute top-[108px] w-full text-center text-gray-400 text-sm">
+              {notAttempted} Not Attempted
+>>>>>>> 59652221922af32677c78ece6bf8c9f7994bb896
             </div>
           </div>
           {/* Stat Blocks */}
@@ -127,6 +186,7 @@ const AnalysisPage = () => {
         {/* Action Buttons */}
         <div className="flex justify-center gap-6 mt-10">
           <button
+<<<<<<< HEAD
             className="bg-white border-2 border-blue-700 text-blue-700 font-semibold rounded-lg px-7 py-3 transition-all duration-150 hover:bg-blue-50 hover:scale-105 shadow-sm"
             onClick={() => navigate("/review", { state: location.state })}
           >
@@ -137,6 +197,28 @@ const AnalysisPage = () => {
             onClick={() => navigate("/")}
           >
             🏠 Back to Home
+=======
+            className="bg-white border-2 border-blue-700 text-blue-700 font-semibold rounded-lg px-7 py-3 transition-all duration-150 hover:bg-blue-50 hover:scale-105 shadow-sm flex items-center justify-center"
+            onClick={() => navigate("/review", { state: location.state })}
+          >
+            <img
+              src="https://www.svgrepo.com/show/527286/pen-new-square.svg"
+              alt="Review Icon"
+              className="w-5 h-5 mr-2"
+            />
+            Review Answers
+          </button>
+          <button
+            className="bg-blue-700 text-white font-semibold rounded-lg px-7 py-3 transition-all duration-150 hover:bg-blue-900 hover:scale-105 shadow-sm flex items-center justify-center"
+            onClick={() => navigate("/")}
+          >
+            <img
+              src="https://www.svgrepo.com/show/520786/home-10.svg"
+              alt="Home Icon"
+              className="w-5 h-5 mr-2 filter brightness-0 invert"
+            />
+            Back to Home
+>>>>>>> 59652221922af32677c78ece6bf8c9f7994bb896
           </button>
         </div>
       </div>

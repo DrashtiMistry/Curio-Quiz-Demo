@@ -1,0 +1,5 @@
+Fix ESLint no-unused-vars error by renaming motion import to Motion
+
+- Updated import from 'motion' to 'Motion' to comply with ESLint rule
+- Changed motion.div to Motion.div in JSX to match new import name
+- Resolves ESLint error: 'motion' is defined but never used
