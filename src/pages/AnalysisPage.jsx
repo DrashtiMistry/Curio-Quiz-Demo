@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Target } from "lucide-react";
 
 const AnalysisPage = () => {
   const location = useLocation();
@@ -51,16 +52,22 @@ const AnalysisPage = () => {
   }, [correctPercent]);
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center justify-start py-14">
-      <div className="w-full max-w-3xl px-2">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col items-center justify-start py-8">
+      <div className="w-full max-w-4xl px-4">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">Quiz Results</h1>
+          <p className="text-gray-600">Your performance analysis</p>
+        </div>
+        
         {/* Gauge and Statistics Grid */}
-        <div className="bg-white rounded-3xl shadow-lg flex flex-col md:flex-row items-center justify-between px-12 py-10 mb-10 gap-8">
+        <div className="bg-white rounded-3xl shadow-xl flex flex-col md:flex-row items-center justify-between px-8 py-8 mb-8 gap-8">
           {/* Gauge */}
-          <div className="relative w-[180px] h-[110px] flex-shrink-0">
-            <svg width="180" height="110" viewBox="0 0 180 110">
+          <div className="relative w-[200px] h-[140px] flex-shrink-0">
+            <svg width="200" height="140" viewBox="0 0 200 140">
               {/* Track */}
               <path
-                d="M20,100 A80,80 0 0,1 160,100"
+                d="M20,120 A80,80 0 0,1 180,120"
                 fill="none"
                 stroke="#F3F4F6"
                 strokeWidth="16"
@@ -68,11 +75,10 @@ const AnalysisPage = () => {
 
               {/* Animated Correct */}
               <path
-                d="M20,100 A80,80 0 0,1 160,100"
+                d="M20,120 A80,80 0 0,1 180,120"
                 fill="none"
                 stroke="#22C55E"
                 strokeWidth="16"
-
                 strokeDasharray={`${gaugeAngle(animatedPercent)} 999`}
                 strokeDashoffset="0"
                 style={{
@@ -81,65 +87,63 @@ const AnalysisPage = () => {
                 }}
               />
             </svg>
-            <div className="absolute top-12 w-full text-center font-extrabold text-3xl text-gray-900">
+            <div className="absolute top-16 w-full text-center font-extrabold text-4xl text-gray-900">
               {correctCount}/{totalQuestions}
             </div>
-            <div className="absolute top-[84px] w-full text-center font-semibold text-lg text-green-500 tracking-wider">
+            <div className="absolute top-[100px] w-full text-center font-semibold text-lg text-green-500 tracking-wider">
               Correct
             </div>
-            <div className="absolute top-[108px] w-full text-center text-gray-400 text-sm">
+            <div className="absolute top-[120px] w-full text-center text-gray-400 text-sm">
               {notAttempted} Not Attempted
             </div>
           </div>
           {/* Stat Blocks */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full md:w-auto">
-            <div className="rounded-xl border-2 border-green-400 bg-green-50 py-4 text-center transition-all duration-200 hover:shadow-lg hover:bg-green-100">
-              <div className="text-green-600 font-semibold text-lg">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full md:w-auto">
+            <div className="rounded-xl border-2 border-green-400 bg-green-50 py-4 px-4 text-center transition-all duration-200 hover:shadow-lg hover:bg-green-100">
+              <div className="text-green-600 font-semibold text-base">
                 Correct
               </div>
-              <div className="text-2xl font-bold mt-2">{correctCount}</div>
+              <div className="text-2xl font-bold mt-1">{correctCount}</div>
             </div>
-            <div className="rounded-xl border-2 border-red-400 bg-red-50 py-4 text-center transition-all duration-200 hover:shadow-lg hover:bg-red-100">
-              <div className="text-red-500 font-semibold text-lg">
+            <div className="rounded-xl border-2 border-red-400 bg-red-50 py-4 px-4 text-center transition-all duration-200 hover:shadow-lg hover:bg-red-100">
+              <div className="text-red-500 font-semibold text-base">
                 Incorrect
               </div>
-              <div className="text-2xl font-bold mt-2">{incorrectCount}</div>
+              <div className="text-2xl font-bold mt-1">{incorrectCount}</div>
             </div>
-            <div className="rounded-xl border-2 border-gray-200 bg-gray-50 py-4 text-center transition-all duration-200 hover:shadow-lg hover:bg-gray-100">
-              <div className="text-gray-700 font-semibold text-lg">
+            <div className="rounded-xl border-2 border-gray-200 bg-gray-50 py-4 px-4 text-center transition-all duration-200 hover:shadow-lg hover:bg-gray-100">
+              <div className="text-gray-700 font-semibold text-base">
                 Not Attempted
               </div>
-              <div className="text-2xl font-bold mt-2">{notAttempted}</div>
+              <div className="text-2xl font-bold mt-1">{notAttempted}</div>
             </div>
           </div>
         </div>
 
         {/* Performance Analysis */}
-        <div className="bg-white rounded-2xl shadow-md px-10 py-8 flex flex-col gap-7">
-          <div className="flex items-center gap-2 font-bold text-xl text-gray-800 mb-1">
-            <span role="img" aria-label="target">
-              🎯
-            </span>
+        <div className="bg-white rounded-2xl shadow-xl px-8 py-6 flex flex-col gap-6">
+          <div className="flex items-center gap-2 font-bold text-xl text-gray-800 mb-2">
+            <Target className="w-6 h-6 mr-2" />
             Performance Analysis
           </div>
           <div className="flex flex-col gap-4">
-            <div className="flex items-center justify-between group">
+            <div className="flex items-center justify-between group p-3 rounded-lg hover:bg-gray-50 transition-all">
               <span className="text-gray-600 font-medium">Accuracy Rate</span>
-              <span className="rounded-lg bg-red-50 text-red-500 px-4 py-1 font-bold text-lg transition-all group-hover:bg-red-100">
+              <span className="rounded-lg bg-red-50 text-red-500 px-4 py-2 font-bold text-lg transition-all group-hover:bg-red-100">
                 {accuracyRate}%
               </span>
             </div>
-            <div className="flex items-center justify-between group">
+            <div className="flex items-center justify-between group p-3 rounded-lg hover:bg-gray-50 transition-all">
               <span className="text-gray-600 font-medium">Completion Rate</span>
-              <span className="rounded-lg bg-blue-50 text-blue-600 px-4 py-1 font-bold text-lg transition-all group-hover:bg-blue-100">
+              <span className="rounded-lg bg-blue-50 text-blue-600 px-4 py-2 font-bold text-lg transition-all group-hover:bg-blue-100">
                 {completionRate}%
               </span>
             </div>
-            <div className="flex items-center justify-between group">
+            <div className="flex items-center justify-between group p-3 rounded-lg hover:bg-gray-50 transition-all">
               <span className="text-gray-600 font-medium">
                 Average Time per Question
               </span>
-              <span className="rounded-lg bg-gray-50 text-gray-700 px-4 py-1 font-bold text-lg transition-all group-hover:bg-gray-100">
+              <span className="rounded-lg bg-gray-50 text-gray-700 px-4 py-2 font-bold text-lg transition-all group-hover:bg-gray-100">
                 {avgTime ? `${(avgTime / 60).toFixed(1)}m` : "0.0m"}
               </span>
             </div>
@@ -147,10 +151,9 @@ const AnalysisPage = () => {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex justify-center gap-6 mt-10">
+        <div className="flex justify-center gap-6 mt-8">
           <button
-
-            className="bg-white border-2 border-blue-700 text-blue-700 font-semibold rounded-lg px-7 py-3 transition-all duration-150 hover:bg-blue-50 hover:scale-105 shadow-sm flex items-center justify-center"
+            className="bg-white border-2 border-blue-700 text-blue-700 font-semibold rounded-xl px-8 py-3 transition-all duration-150 hover:bg-blue-50 hover:scale-105 shadow-lg flex items-center justify-center"
             onClick={() => navigate("/review", { state: location.state })}
           >
             <img
@@ -161,7 +164,7 @@ const AnalysisPage = () => {
             Review Answers
           </button>
           <button
-            className="bg-blue-700 text-white font-semibold rounded-lg px-7 py-3 transition-all duration-150 hover:bg-blue-900 hover:scale-105 shadow-sm flex items-center justify-center"
+            className="bg-blue-700 text-white font-semibold rounded-xl px-8 py-3 transition-all duration-150 hover:bg-blue-900 hover:scale-105 shadow-lg flex items-center justify-center"
             onClick={() => navigate("/")}
           >
             <img

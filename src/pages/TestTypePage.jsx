@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { FileText, BookOpen } from "lucide-react";
 
 const SUBJECTS = [
   {
@@ -42,21 +43,22 @@ const TestTypePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f7f9fc] py-12 px-2">
-      <div
-        className="mb-6 text-blue-700 font-semibold cursor-pointer flex items-center w-fit hover:underline"
-        onClick={() => navigate(-1)}
-      >
-        <span className="mr-1 text-xl">←</span> Back to Exams
-      </div>
-      <h1 className="text-2xl md:text-3xl font-extrabold text-center text-[#1976d2] mb-2">
-        JEE (Joint Entrance Examination)
-      </h1>
-      <p className="text-lg text-gray-600 text-center mb-10">
-        Choose a subject to start practicing
-      </p>
+    <div className="min-h-screen bg-[#f7f9fc] py-6 px-2">
+      <div className="max-w-7xl mx-auto px-4">
+        <div
+          className="mb-6 text-blue-600 font-semibold cursor-pointer flex items-center w-fit hover:text-blue-800 transition-colors duration-200 ml-4 mt-8 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-xl shadow-sm hover:shadow-md"
+          onClick={() => navigate(-1)}
+        >
+          <span className="mr-2 text-lg">←</span> Back to Exams
+        </div>
+        <h1 className="text-2xl md:text-3xl font-extrabold text-center text-[#1976d2] mb-2">
+          JEE (Joint Entrance Examination)
+        </h1>
+        <p className="text-lg text-gray-600 text-center mb-8">
+          Choose a subject to start practicing
+        </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-10 max-w-7xl mx-auto px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8">
         {SUBJECTS.map((subj) => (
           <div
             key={subj.key}
@@ -79,15 +81,11 @@ const TestTypePage = () => {
             </div>
             <div className="flex items-center gap-6 mb-6 text-gray-500 text-sm font-medium">
               <span className="flex items-center gap-2">
-                <span role="img" aria-label="chapters">
-                  📄
-                </span>
+                <FileText className="w-4 h-4" />
                 {subj.chapters} chapters
               </span>
               <span className="flex items-center gap-2">
-                <span role="img" aria-label="questions">
-                  📚
-                </span>
+                <BookOpen className="w-4 h-4" />
                 {subj.questions} questions
               </span>
             </div>
@@ -100,6 +98,7 @@ const TestTypePage = () => {
             </button>
           </div>
         ))}
+        </div>
       </div>
     </div>
   );

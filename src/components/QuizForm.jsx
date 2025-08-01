@@ -135,21 +135,20 @@ const QuizForm = () => {
 
   return (
 
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col items-center py-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col items-center py-4">
       <div className="w-full max-w-5xl px-6">
         {/* Header */}
-        <div className="flex justify-center items-center relative mb-8">
-          <h1 className="m-0 font-bold text-3xl text-gray-800">
+        <div className="flex justify-center items-center relative mb-4">
+          <h1 className="m-0 font-bold text-2xl text-gray-800">
             {testType} - {subject}
           </h1>
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 font-bold text-lg bg-white rounded-xl px-6 py-3 shadow-lg border border-blue-200">
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 font-bold text-base bg-white rounded-xl px-4 py-2 shadow-lg border border-blue-200">
             Question: {currentQuestionIndex + 1} / {totalQuestions}
           </div>
         </div>
         {/* Progress Bar */}
-
-        <div className="w-full mb-8">
-          <div className="h-3 bg-gray-200 rounded-full overflow-hidden shadow-inner">
+        <div className="w-full mb-4">
+          <div className="h-2 bg-gray-200 rounded-full overflow-hidden shadow-inner">
             <div
               className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 transition-all duration-500 ease-out rounded-full"
               style={{
@@ -162,39 +161,37 @@ const QuizForm = () => {
         </div>
         {/* Quiz Card */}
         <Motion.div
-
-          className="bg-white rounded-3xl shadow-2xl max-w-4xl mx-auto p-12 border border-blue-100"
+          className="bg-white rounded-3xl shadow-2xl max-w-4xl mx-auto p-8 border border-blue-100"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
-          <div className="flex items-center gap-6 mb-8">
-            <h2 className="m-0 font-bold text-2xl text-gray-800">
+          <div className="flex items-center gap-4 mb-6">
+            <h2 className="m-0 font-bold text-xl text-gray-800">
               Question {currentQuestionIndex + 1}
             </h2>
-            <span className="text-blue-700 bg-blue-50 rounded-2xl px-6 py-3 font-bold shadow-md border border-blue-200 ml-auto min-w-[140px] text-center text-base">
+            <span className="text-blue-700 bg-blue-50 rounded-xl px-4 py-2 font-bold shadow-md border border-blue-200 ml-auto min-w-[120px] text-center text-sm">
               Asked in: {currentQuestion.year || "N/A"}
             </span>
             <button
-              className="ml-3 bg-yellow-50 border-2 border-yellow-200 rounded-xl px-5 py-3 text-lg cursor-pointer hover:bg-yellow-100 hover:border-yellow-300 hover:text-yellow-700 transition-all duration-300 font-medium shadow-md"
+              className="ml-2 bg-yellow-50 border-2 border-yellow-200 rounded-xl px-4 py-2 text-base cursor-pointer hover:bg-yellow-100 hover:border-yellow-300 hover:text-yellow-700 transition-all duration-300 font-medium shadow-md"
               onClick={() => setShowHint(true)}
             >
               💡 Hint
             </button>
             <button
-
-              className="bg-green-50 border-2 border-green-200 rounded-xl px-5 py-3 text-lg cursor-pointer hover:bg-green-100 hover:border-green-300 hover:text-green-700 transition-all duration-300 font-medium shadow-md"
+              className="bg-green-50 border-2 border-green-200 rounded-xl px-4 py-2 text-base cursor-pointer hover:bg-green-100 hover:border-green-300 hover:text-green-700 transition-all duration-300 font-medium shadow-md"
               onClick={() => setShowSuggestion(true)}
             >
               💬 Suggestions
             </button>
           </div>
 
-          <p className="mt-8 text-lg leading-relaxed text-gray-700 font-medium">
+          <p className="mt-6 text-base leading-relaxed text-gray-700 font-medium">
             {currentQuestion.text}
           </p>
           {currentQuestion.image && (
-            <div className="mt-6 text-center">
+            <div className="mt-4 text-center">
               <img
                 src={currentQuestion.image}
                 alt="Question visual"
@@ -202,11 +199,11 @@ const QuizForm = () => {
               />
             </div>
           )}
-          <div className="mt-10">
+          <div className="mt-6">
             {currentQuestion.options.map((option, index) => (
               <div
                 key={index}
-                className={`flex items-center mb-6 cursor-pointer rounded-2xl border-2 transition-all duration-300 px-8 py-5 text-lg font-medium shadow-md hover:shadow-lg ${
+                className={`flex items-center mb-4 cursor-pointer rounded-xl border-2 transition-all duration-300 px-6 py-4 text-base font-medium shadow-md hover:shadow-lg ${
                   selectedOption === index
                     ? "bg-blue-50 border-blue-400 shadow-lg transform scale-105"
                     : "bg-white border-gray-200 hover:bg-blue-25 hover:border-blue-300"
@@ -218,8 +215,7 @@ const QuizForm = () => {
                   name="option"
                   readOnly
                   checked={selectedOption === index}
-
-                  className="mr-6 w-5 h-5"
+                  className="mr-4 w-4 h-4"
                 />
                 <label className="cursor-pointer leading-relaxed">
                   {option}
@@ -229,14 +225,12 @@ const QuizForm = () => {
           </div>
         </Motion.div>
         {/* Navigation Buttons */}
-
-        <div className="flex justify-center gap-8 mt-12 mb-12">
+        <div className="flex justify-center gap-6 mt-8 mb-6">
           {/* Previous Button */}
           <button
             onClick={handlePrevious}
             disabled={currentQuestionIndex === 0}
-
-            className={`px-10 py-4 rounded-2xl border-2 font-bold text-lg transition-all duration-300 shadow-lg flex items-center justify-center
+            className={`px-8 py-3 rounded-xl border-2 font-bold text-base transition-all duration-300 shadow-lg flex items-center justify-center
               ${
                 currentQuestionIndex === 0
                   ? "bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed opacity-50"
@@ -246,7 +240,7 @@ const QuizForm = () => {
             <img
               src="https://www.svgrepo.com/show/199349/previous-back.svg"
               alt="Previous"
-              className="w-6 h-6 mr-3 filter"
+              className="w-5 h-5 mr-2 filter"
               style={{
                 filter:
                   currentQuestionIndex === 0
@@ -259,8 +253,7 @@ const QuizForm = () => {
           {/* Next/Submit Button */}
           <button
             onClick={handleNext}
-
-            className="px-10 py-4 rounded-2xl border-2 font-bold text-lg transition-all duration-300 shadow-lg flex items-center justify-center
+            className="px-8 py-3 rounded-xl border-2 font-bold text-base transition-all duration-300 shadow-lg flex items-center justify-center
               border-orange-400 text-orange-600 bg-white hover:bg-orange-500 hover:border-orange-500 hover:text-white hover:shadow-xl transform hover:scale-105 cursor-pointer"
           >
             {currentQuestionIndex === totalQuestions - 1 ? (
@@ -268,7 +261,7 @@ const QuizForm = () => {
                 <img
                   src="https://www.svgrepo.com/show/199351/next.svg"
                   alt="Submit"
-                  className="w-6 h-6 mr-3"
+                  className="w-5 h-5 mr-2"
                 />
                 Submit Quiz
               </>
@@ -277,7 +270,7 @@ const QuizForm = () => {
                 <img
                   src="https://www.svgrepo.com/show/199351/next.svg"
                   alt="Skip"
-                  className="w-6 h-6 mr-3"
+                  className="w-5 h-5 mr-2"
                 />
                 Skip
               </>
@@ -286,7 +279,7 @@ const QuizForm = () => {
                 <img
                   src="https://www.svgrepo.com/show/199351/next.svg"
                   alt="Next"
-                  className="w-6 h-6 mr-3"
+                  className="w-5 h-5 mr-2"
                 />
                 Next
               </>

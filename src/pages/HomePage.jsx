@@ -2,6 +2,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { motion as Motion } from "framer-motion";
+import { BookOpen, Bot, BarChart3, Rocket } from "lucide-react";
 
 const HomePage = ({ dark = false }) => {
   const navigate = useNavigate();
@@ -78,7 +79,8 @@ const HomePage = ({ dark = false }) => {
           whileTap={{ scale: 0.95 }}
         >
           <span className="flex items-center justify-center gap-3">
-            🚀 Start Quiz
+            <Rocket size={20} />
+            Start Quiz
             <span className="group-hover:translate-x-1 transition-transform duration-300">
               →
             </span>
@@ -118,7 +120,7 @@ const HomePage = ({ dark = false }) => {
             whileHover={{ y: -10 }}
           >
             <div className="w-20 h-20 flex items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 mb-6 text-3xl font-bold text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
-              📚
+              <BookOpen size={32} />
             </div>
             <h3
               className={`text-2xl font-bold mb-4 ${
@@ -150,7 +152,7 @@ const HomePage = ({ dark = false }) => {
             whileHover={{ y: -10 }}
           >
             <div className="w-20 h-20 flex items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 mb-6 text-3xl font-bold text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
-              🤖
+              <Bot size={32} />
             </div>
             <h3
               className={`text-2xl font-bold mb-4 ${
@@ -182,7 +184,7 @@ const HomePage = ({ dark = false }) => {
             whileHover={{ y: -10 }}
           >
             <div className="w-20 h-20 flex items-center justify-center rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 mb-6 text-3xl font-bold text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
-              📊
+              <BarChart3 size={32} />
             </div>
             <h3
               className={`text-2xl font-bold mb-4 ${

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { User, Moon, Sun } from "lucide-react";
  const Layout = ({ children }) => {
   const [dark, setDark] = useState(false);
 
@@ -38,28 +39,22 @@ import { Link } from "react-router-dom";
                 : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
             }`}
           >
-            <span className="text-xl" role="img" aria-label="profile">
-              👤
-            </span>
+            <User className="text-xl" />
             Profile
           </Link>
           <button
             className={`text-3xl p-3 rounded-full transition-all duration-300 hover:shadow-lg hover:scale-110 ${
               dark
-                ? "bg-[#232b3d] hover:bg-[#2a3441] text-yellow-400"
-                : "bg-blue-50 hover:bg-blue-100 text-blue-600"
+                ? "bg-[#232b3d] hover:bg-[#2a3441] text-gray-100"
+                : "bg-blue-50 hover:bg-blue-100 text-gray-700"
             }`}
             onClick={() => setDark((d) => !d)}
             aria-label="Toggle theme"
           >
             {dark ? (
-              <span role="img" aria-label="dark">
-                🌙
-              </span>
+              <Moon className="text-gray-100" />
             ) : (
-              <span role="img" aria-label="light">
-                ☀️
-              </span>
+              <Sun className="text-gray-700" />
             )}
           </button>
         </div>

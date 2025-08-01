@@ -1,5 +1,6 @@
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { BookOpen } from "lucide-react";
 
 const CHAPTERS_DATA = {
   Physics: [
@@ -66,20 +67,21 @@ const ChapterSelectionPage = () => {
 
   return (
     <div className="min-h-screen bg-[#f7f9fc] py-12 px-2">
-      <div
-        className="mb-6 text-blue-700 font-semibold cursor-pointer flex items-center w-fit hover:underline"
-        onClick={() => navigate(-1)}
-      >
-        <span className="mr-1 text-xl">←</span> Back to Subjects
-      </div>
-      <h1 className="text-2xl md:text-3xl font-extrabold text-center text-[#1976d2] mb-2">
-        {testType} - {subject}
-      </h1>
-      <p className="text-lg text-gray-600 text-center mb-10">
-        Select a chapter to start your quiz
-      </p>
+      <div className="max-w-7xl mx-auto px-4">
+        <div
+          className="mb-10 text-blue-600 font-semibold cursor-pointer flex items-center w-fit hover:text-blue-800 transition-colors duration-200 ml-4 mt-16 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-xl shadow-sm hover:shadow-md"
+          onClick={() => navigate(-1)}
+        >
+          <span className="mr-2 text-lg">←</span> Back to Subjects
+        </div>
+        <h1 className="text-2xl md:text-3xl font-extrabold text-center text-[#1976d2] mb-2">
+          {testType} - {subject}
+        </h1>
+        <p className="text-lg text-gray-600 text-center mb-10">
+          Select a chapter to start your quiz
+        </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-10 max-w-7xl mx-auto px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-10">
         {chapters.map((chapter) => (
           <div
             className="bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer p-8 flex flex-col gap-4 border border-transparent hover:border-blue-200 hover:scale-[1.02] min-h-[280px]"
@@ -109,9 +111,7 @@ const ChapterSelectionPage = () => {
               {chapter.desc}
             </p>
             <div className="flex items-center gap-3 mb-6 text-gray-500 text-sm font-medium">
-              <span role="img" aria-label="questions">
-                📚
-              </span>
+              <BookOpen className="w-4 h-4" />
               {chapter.questions} questions available
             </div>
             <button
@@ -123,6 +123,7 @@ const ChapterSelectionPage = () => {
             </button>
           </div>
         ))}
+        </div>
       </div>
     </div>
   );
